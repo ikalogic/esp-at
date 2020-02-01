@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "esp_at.h": "c",
+        "string.h": "c"
+    }
+}

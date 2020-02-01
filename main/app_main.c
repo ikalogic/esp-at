@@ -28,7 +28,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_system.h"
+#include "esp_bt.h"
 #include "nvs_flash.h"
+#include "custom_ble.h"
 
 #ifdef CONFIG_AT_WIFI_COMMAND_SUPPORT
 #include "esp_event_loop.h"
@@ -51,6 +53,7 @@
 #ifdef CONFIG_AT_ETHERNET_SUPPORT
 #include "at_eth_init.h"
 #endif
+
 
 #ifdef CONFIG_AT_OTA_SUPPORT
 static uint8_t at_exeCmdCipupdate(uint8_t *cmd_name)//add get station ip and ap ip
@@ -103,6 +106,8 @@ static esp_at_cmd_struct at_update_cmd[] = {
 };
 #endif
 
+
+
 #ifdef CONFIG_AT_WIFI_COMMAND_SUPPORT
 static esp_err_t at_wifi_event_handler(void *ctx, system_event_t *event)
 {
@@ -151,6 +156,7 @@ void app_main()
 #endif
 
     nvs_flash_init();
+    custom_ble_ll_init();
     tcpip_adapter_init();
 #ifdef CONFIG_AT_WIFI_COMMAND_SUPPORT
     initialise_wifi();
@@ -299,5 +305,7 @@ void app_main()
 #ifdef CONFIG_AT_OTA_SUPPORT
     esp_at_custom_cmd_array_regist (at_update_cmd, sizeof(at_update_cmd)/sizeof(at_update_cmd[0]));
 #endif
+    
+    custom_ble_reg();
     at_custom_init();
 }
