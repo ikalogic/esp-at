@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "esp_at.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "blecent.h": "c"
     }
 }

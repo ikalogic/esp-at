@@ -10,3 +10,8 @@
 +CBLECONNECT:1234(handle)
 +CBLECONNECT: Failed (with some reason tesst)
 +CBLEWRITE: 0(status)
+
+# to be added (yet)
+
++CBLERX: (When data is received from Central device)
++CBLE

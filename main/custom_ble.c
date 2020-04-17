@@ -261,6 +261,14 @@ blecent_on_sync(void)
 
 }
 
+static void
+gatt_svr_register_cb(struct ble_gatt_register_ctxt *ctxt, void *arg)
+{
+    //TODO
+}
+
+
+
 void blecent_host_task(void *param)
 {
     ESP_LOGI(tag, "BLE Host Task Started");
@@ -278,7 +286,7 @@ static uint8_t cble_reset(uint8_t para_num)
     nimble_port_stop();
     vTaskDelay(100);
 
-    rc = peer_init(MYNEWT_VAL(BLE_MAX_CONNECTIONS), 64, 64, 64);
+    rc = peer_init(CONFIG_BT_NIMBLE_MAX_CONNECTIONS, 64, 64, 64);
     assert(rc == 0);
 
     nimble_port_freertos_init(blecent_host_task);
@@ -475,10 +483,11 @@ void custom_ble_ll_init(void)
     /* Configure the host. */
     ble_hs_cfg.reset_cb = blecent_on_reset;
     ble_hs_cfg.sync_cb = blecent_on_sync;
+    ble_hs_cfg.gatts_register_cb = gatt_svr_register_cb;
     ble_hs_cfg.store_status_cb = ble_store_util_status_rr;
 
     /* Initialize data structures to track connected peers. */
-    rc = peer_init(MYNEWT_VAL(BLE_MAX_CONNECTIONS), 64, 64, 64);
+    rc = peer_init(CONFIG_BT_NIMBLE_MAX_CONNECTIONS, 64, 64, 64);
     assert(rc == 0);
 
     /* XXX Need to have template for store */
